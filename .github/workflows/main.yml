@@ -7,6 +7,10 @@ on:
         description: 'Release name'
         required: true
         type: string
+      release_tag:
+        description: 'Release tag'
+        required: true
+        type: string
       release_body:
         description: 'Release body'
         required: true
@@ -19,25 +23,31 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.12'
+  
+      - name: Create virtual environment
+        run: |
+          python -m venv venv
+      
       - name: Test venv activation
         run: |
           venv\Scripts\python --version
-          
-      - name: Update Android build
-        run: |
-          venv\Scripts\briefcase update android
       
-      - name: Build Android
+      - name: Install dependencies
         run: |
-          venv\Scripts\briefcase build android
-      
+          venv\Scripts\python -m pip install --upgrade pip
+          venv\Scripts\pip install briefcase cryptography
+    
       - name: Create GitHub Release
         id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: release-${{ github.run_number }}
+          tag_name: ${{ github.event.inputs.release_tag }}
           release_name: ${{ github.event.inputs.release_name }}
           body: ${{ github.event.inputs.release_body }}
           draft: false
