@@ -34,13 +34,17 @@ jobs:
       
       - name: Test venv activation
         run: |
-          venv\Scripts\python --version
+          echo %VIRTUAL_ENV%
       
       - name: Install dependencies
         run: |
-          venv\Scripts\python -m pip install --upgrade pip
-          venv\Scripts\pip install briefcase cryptography
-          
+          python -m pip install briefcase cryptography
+
+      - name: Create android build stub
+        run: |
+          briefcase create android
+          briefcase build android
+      
       - name: Create GitHub Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
