@@ -46,6 +46,10 @@ class SimpleNotificationService:
 
         # 3. Показываем уведомление (id=1)
         notification_manager.notify(1, builder.build())
+    
+    def stop(self):
+        notification_manager = self.app_context.getSystemService(Context.NOTIFICATION_SERVICE)
+        notification_manager.cancel(1)
 
 class TelegramWSProxyforAndroid(toga.App):
     port = 1080
@@ -53,6 +57,7 @@ class TelegramWSProxyforAndroid(toga.App):
     dc_ip = ["2:149.154.167.220", "4:149.154.167.220"]
     proxy_launched = False
     proxy = None
+    service = None
     completion_future = Future()
     def met(self, bool_iter, ifnot):
         for b in bool_iter:
@@ -93,8 +98,8 @@ class TelegramWSProxyforAndroid(toga.App):
                 self.proxy = backend.main(command)
                 self.proxy_launched = True
                 if isAndroid:
-                    service = SimpleNotificationService(self)
-                    service.start()
+                    self.service = SimpleNotificationService(self)
+                    self.service.start()
                     print("Команда на запуск сервиса отправлена")
             else:
                 if self.proxy:
@@ -102,6 +107,8 @@ class TelegramWSProxyforAndroid(toga.App):
                     self.proxy = None
                     self.proxy_launched = False
                     backend.STOP_EVENT.clear()
+                    self.service.stop()
+                    self.service = None
                     print("PROXY OFF")
             btn.text=f"{'Turn proxy OFF' if self.proxy_launched else 'Turn proxy ON'}"
         """Construct and show the Toga application.
