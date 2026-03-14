@@ -21,7 +21,22 @@ Flowseal's solution to fixing Telegram speed for android
 ## Сборка с исходного кода
 Для этого вам понадобится Python версий 3.10-3.13 (я использовал 3.12, и >=3.14 не подойдут)
 
-Вам требуется всего-то ничего, всего лишь активировать venv (venv\Scripts\activate)
+Потом, вам нужно инициализировать venv в папке tg-ws-proxy-android (тот, который в папке репозитория)
+```bash
+cd tg-ws-proxy-android
+```
+### Linux/macOS
+```bash
+python3 -m venv venv
+source venv/bin/activate #Активировать venv
+python -m pip install briefcase cryptography # Установить зависимости
+```
+### Windows
+```bash
+python -m venv venv
+venv\Scripts\activate #Активировать venv
+python -m pip install briefcase cryptography # Установить зависимости
+```
 
 Если вы просто тестируете, то чтобы запустить программу введите:
 ```bash
@@ -31,7 +46,7 @@ briefcase dev
 Если вы планируете создавать отдельную программу, то вам нужно ввести:
 
 ```bash
-briefcase update (macOS/windows/linux/android/iOS/web)
+briefcase create (macOS/windows/linux/android/iOS/web)
 briefcase build (macOS/windows/linux/android/iOS/web)
 ```
 Для сборки на андроид вам также потребуется VPN в любую не русскую страну (Zapret тут не поможет), чтобы briefcase мог скачать пакеты с chaquo.com
