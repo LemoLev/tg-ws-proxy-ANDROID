@@ -21,18 +21,15 @@ jobs:
       
       - name: Test venv activation
         run: |
-          venv\Scripts\activate
-          python --version
+          venv\Scripts\python --version
           
       - name: Update Android build
         run: |
-          venv\Scripts\activate
-          briefcase update android
+          venv\Scripts\briefcase update android
       
       - name: Build Android
         run: |
-          venv\Scripts\activate
-          briefcase build android
+          venv\Scripts\briefcase build android
       
       - name: Create GitHub Release
         id: create_release
