@@ -26,12 +26,12 @@ jobs:
       
       - name: Update Android build
         run: |
-          source venv/bin/activate
+          source venv/Scripts/activate
           briefcase update android
       
       - name: Build Android
         run: |
-          source venv/bin/activate
+          source venv/Scripts/activate
           briefcase build android
       
       - name: Create GitHub Release
