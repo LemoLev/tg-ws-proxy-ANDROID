@@ -7,7 +7,7 @@ isAndroid = True
 import toga
 from toga import validators
 from concurrent.futures import Future
-import tg_ws_proxy_android.proxy_backend.tg_ws_proxy_NEW as backend
+import tg_ws_proxy_android.proxy_backend.tg_ws_proxy as backend
 try:
     from android.app import NotificationChannel, NotificationManager
     from android.content import Context
@@ -107,8 +107,9 @@ class TelegramWSProxyforAndroid(toga.App):
                     self.proxy = None
                     self.proxy_launched = False
                     backend.STOP_EVENT.clear()
-                    self.service.stop()
-                    self.service = None
+                    if isAndroid:
+                        self.service.stop()
+                        self.service = None
                     print("PROXY OFF")
             btn.text=f"{'Turn proxy OFF' if self.proxy_launched else 'Turn proxy ON'}"
         """Construct and show the Toga application.

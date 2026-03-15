@@ -2,7 +2,7 @@
 [tool.briefcase]
 project_name = "TG-WS-Proxy-Android"
 bundle = "soft.shadlv"
-version = "0.0.1"
+version = "v1.1.0"
 url = "https://github.com/Flowseal/tg-ws-proxy"
 license.file = "LICENSE"
 author = "ShadowLev"
